@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center display-3">Tasks</h1>
+
+            <h2 class="display-8 py-3">Pending</h2>
+            {% for task in tasksUndone %}
+                <ul class="list-group">
+                    <a class="list-group-item" href="{% url 'task_detail' task.id %}">
+                        <header class="d-flex justify-content-between">
+                            <h1 class="fw-bold">{{task.title}}</h1>
+                            <p>{{task.user}}</p>
+                        </header>
+                        <p>{{task.description}}</p>
+                        {% if task.important %}
+                            <p><strong>IMPORTANT TASK</strong></p>
+            
+                        {% endif %}
+                        <br>
+                    </a>
+                </ul>
+
+            {% endfor %}
+
+            <h2 class="display-8 py-3">Done</h2>
+   
+            {% for task in tasksDone %}
+                <ul class="list-group">
+                    <a class="list-group-item" href="{% url 'task_detail' task.id %}"> 
+                        <header class="d-flex justify-content-between">
+                            <h1 class="fw-bold text-success">{{task.title}}</h1>
+                            <p>{{task.user}}</p>
+                        </header>
+                        
+                        <p>{{task.description}}</p>
+                        {% if task.important %}
+                            <p><strong>IMPORTANT TASK</strong></p>
+            
+                        {% endif %}
+                        <strong><p>Date completed: {{ task.dateCompleted }}</p></strong>
+                        <br>
+                    </a>
+                </ul>
+                
+            {% endfor %}
+            
+            <br>
+            <br>
+        
+            <form action="/tasks/create/", method="GET">
+                <button class="btn btn-dark offset-md-3">Create New Task</button>
+            </form>
+            <br>
+
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}
